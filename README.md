@@ -1,9 +1,55 @@
-# React TypeScript Starter Pack
+# Gadgets Catalog 🛍️
 
-To use this template click `Use this template`
+A modern React-based e-commerce catalog for browsing gadgets, managing favorites, and adding products to the shopping cart.
+The project is built according to the provided Figma design, focusing on responsive layout, smooth navigation, and clean user experience.
 
-### Available Scripts
+🎨 Design Reference: [Figma Design Link](https://www.figma.com/design/xMK2Dy0mfBbJJSNctmOuLW/Phone-catalog--V2--Rounded-Style-1?node-id=0-1&p=f)
 
-`Deploy` - available to deploy your application to gh-pages, to deploy the project, change the second line of code in package.json, specifically the homepage value, from "." to the repository name
+🌐 Live Demo: [View Demo](https://react-gadgets-ecommerce.netlify.app/)
 
-`SCSS Preprocessor` - available to write your styles with modern style language
+## 🚀 Features
+
+- Responsive design for desktop, tablet, and mobile
+- Shopping cart with item quantity management
+- Favorites page to save and view liked products
+- Product filtering and sorting by category, price, or name
+- Smooth page navigation using React Router
+- Global state management via React Context
+- Interactive sliders powered by Swiper
+- TypeScript integration for type safety and scalability
+
+## 🛠️ Technologies Used
+
+- React
+- TypeScript
+- React Router
+- React Context API
+- Swiper.js
+- SCSS Modules
+
+## ⚙️ Setup Instructions
+
+Follow these steps to set up the project locally:
+
+### Clone the repository
+
+```
+git clone https://github.com/Mitlosh/react_gadgets-ecommerce.git
+cd react_gadgets-ecommerce
+```
+
+### Install dependencies
+
+```
+npm install
+# or
+yarn install
+```
+
+### Run the project locally
+
+```
+npm start
+# or
+yarn start
+```

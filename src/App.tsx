@@ -1,21 +1,25 @@
-import React from 'react';
-import './App.scss';
+import './styles/main.scss';
+import { Outlet } from 'react-router-dom';
+import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
+import { useContext } from 'react';
+import { DataContext } from './context/DataContext';
 
-interface Props {
-  onClick: () => void;
-  children: React.ReactNode;
-}
+export const App = () => {
+  const { isMenuOpen } = useContext(DataContext);
 
-export const Provider: React.FC<Props> = React.memo(({ onClick, children }) => (
-  <button type="button" onClick={onClick}>
-    {children}
-  </button>
-));
-
-export const App: React.FC = () => {
   return (
-    <div className="starter">
-      <Provider onClick={() => ({})}>TodoList</Provider>
+    <div className="App">
+      <h1 hidden>Product Catalog</h1>
+      <Navbar />
+
+      {!isMenuOpen && (
+        <main className="main">
+          <Outlet />
+        </main>
+      )}
+
+      {!isMenuOpen && <Footer />}
     </div>
   );
 };
