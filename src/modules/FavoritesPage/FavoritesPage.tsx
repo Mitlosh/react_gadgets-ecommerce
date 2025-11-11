@@ -1,12 +1,11 @@
 import styles from './FavoritesPage.module.scss';
-import { useContext } from 'react';
 import { ProductCard } from '../../components/ProductCard';
-import { DataContext } from '../../context/DataContext';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
 
 export const FavoritesPage = () => {
-  const { favorites } = useContext(DataContext);
   const navigate = useNavigate();
+  const favorites = useAppSelector(state => state.favorites);
 
   return (
     <div className={styles.favorites}>

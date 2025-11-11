@@ -1,10 +1,14 @@
 import styles from './Loader.module.scss';
 
-export const Loader: React.FC = () => {
+type Props = {
+  message?: string;
+};
+
+export const Loader: React.FC<Props> = ({ message = 'Loading…' }) => {
   return (
-    <div className={styles.loader}>
-      <div className={styles.loader__spinner}></div>
-      <p className={styles.loader__text}>Loading...</p>
+    <div className={styles.loaderWrapper} aria-busy="true">
+      <div className={styles.spinner} />
+      <p className={styles.text}>{message}</p>
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import styles from './ProductCard.module.scss';
 import { Product } from '../../types/Product';
-import { useContext } from 'react';
-import { DataContext } from '../../context/DataContext';
 import classNames from 'classnames';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setFavorites } from '../../store/slices/favoritesSlice';
+import { setCart } from '../../store/slices/cartSlice';
 
 type Props = {
   product: Product;
@@ -14,7 +15,9 @@ export const ProductCard: React.FC<Props> = ({
   product,
   showFullPrice = false,
 }) => {
-  const { favorites, setFavorites, cart, setCart } = useContext(DataContext);
+  const cart = useAppSelector(state => state.cart);
+  const favorites = useAppSelector(state => state.favorites);
+  const dispatch = useAppDispatch();
 
   // --- FAVORITES LOGIC ---
   const isInFavorites = () => {
@@ -26,7 +29,7 @@ export const ProductCard: React.FC<Props> = ({
       ? favorites.filter(fav => fav.id !== product.id)
       : [...favorites, product];
 
-    setFavorites(newFavorites);
+    dispatch(setFavorites(newFavorites));
   };
 
   // --- CART LOGIC ---
@@ -36,9 +39,9 @@ export const ProductCard: React.FC<Props> = ({
 
   const toggleCartItem = () => {
     if (isInCart()) {
-      setCart(cart.filter(item => item.id !== product.id));
+      dispatch(setCart(cart.filter(item => item.id !== product.id)));
     } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
+      dispatch(setCart([...cart, { ...product, quantity: 1 }]));
     }
   };
 
@@ -51,7 +54,7 @@ export const ProductCard: React.FC<Props> = ({
         to={`/${category}/${product.itemId}`}
         className={styles.productCard__image}
       >
-        <img src={image} alt={name} />
+        <img src={`/${image}`} alt={name} />
       </Link>
 
       <p className={`${styles.productCard__title} body-text`}>{name}</p>

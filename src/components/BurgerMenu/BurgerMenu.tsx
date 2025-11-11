@@ -5,8 +5,8 @@ import heart from '../../assets/icons/heart.svg';
 import cartIcon from '../../assets/icons/cart.svg';
 import Logo from '../../assets/icons/Logo.svg';
 import classNames from 'classnames';
-import { useContext, useEffect, useState } from 'react';
-import { DataContext } from '../../context/DataContext';
+import { useEffect, useState } from 'react';
+import { useAppSelector } from '../../store/hooks';
 
 type Props = {
   closeMenu: () => void;
@@ -20,9 +20,8 @@ export const BurgerMenu: React.FC<Props> = ({
   isMenuOpen,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const { favorites, cart } = useContext(DataContext);
-  const favoritesAmount = favorites.length;
-  const cartAmount = cart.length;
+  const favorites = useAppSelector(state => state.favorites);
+  const cart = useAppSelector(state => state.cart);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -82,8 +81,8 @@ export const BurgerMenu: React.FC<Props> = ({
           onClick={closeMenu}
         >
           <img src={heart} className={styles.menu__icon} alt="Favourites" />
-          {favoritesAmount > 0 && (
-            <span className={styles.menu__counter}>{favoritesAmount}</span>
+          {favorites.length > 0 && (
+            <span className={styles.menu__counter}>{favorites.length}</span>
           )}
         </NavLink>
         <NavLink
@@ -96,8 +95,8 @@ export const BurgerMenu: React.FC<Props> = ({
           onClick={closeMenu}
         >
           <img src={cartIcon} className={styles.menu__icon} alt="Cart" />
-          {cartAmount > 0 && (
-            <span className={styles.menu__counter}>{cartAmount}</span>
+          {cart.length > 0 && (
+            <span className={styles.menu__counter}>{cart.length}</span>
           )}
         </NavLink>
       </div>

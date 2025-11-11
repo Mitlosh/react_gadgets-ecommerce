@@ -5,7 +5,7 @@ import arrowRight from '../../assets/icons/arrow-right.svg';
 
 const footerLinks = [
   {
-    to: 'https://github.com/Mitlosh/react_phone-catalog/tree/develop',
+    to: 'https://github.com/Mitlosh/react_gadgets-ecommerce',
     label: 'Github',
   },
   { to: 'https://github.com/Mitlosh', label: 'Contacts' },
@@ -35,10 +35,13 @@ export const Footer = () => {
             ))}
           </ul>
 
-          <NavLink to={'/'} className={styles.footer__backToTop}>
+          <div
+            onClick={() => window.scrollTo(0, 0)}
+            className={styles.footer__backToTop}
+          >
             <span className={styles.footer__backToTop_text}>Back to top</span>
             <img src={arrowRight} className={styles.footer__backToTop_icon} />
-          </NavLink>
+          </div>
         </div>
       </div>
     </footer>

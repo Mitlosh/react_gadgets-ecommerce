@@ -1,27 +1,32 @@
 import styles from './ProductDetails.module.scss';
-import { useContext, useEffect, useState } from 'react';
-import { DataContext } from '../../context/DataContext';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Accessory, Phone, Tablet } from '../../types/ProductDetails';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import classNames from 'classnames';
 import { AlsoLike } from './components/AlsoLike';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setFavorites } from '../../store/slices/favoritesSlice';
+import { setCart } from '../../store/slices/cartSlice';
+import { NotFoundPage } from '../NotFoundPage';
+import { Loader } from '../../components/Loader';
 
 type Category = 'phones' | 'tablets' | 'accessories';
 
 type DetailedProduct = Phone | Tablet | Accessory;
 
 export const ProductDetails = () => {
-  const {
-    favorites,
-    setFavorites,
-    cart,
-    setCart,
-    products,
-    phones,
-    tablets,
-    accessories,
-  } = useContext(DataContext);
+  const dispatch = useAppDispatch();
+
+  const products = useAppSelector(state => state.products.products);
+  const tablets = useAppSelector(state => state.products.tablets);
+  const phones = useAppSelector(state => state.products.phones);
+  const accessories = useAppSelector(state => state.products.accessories);
+  const favorites = useAppSelector(state => state.favorites);
+  const cart = useAppSelector(state => state.cart);
+  const isLoading = useAppSelector(s => s.ui.isLoading);
+  const error = useAppSelector(s => s.ui.error);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [mainImage, setMainImage] = useState<string>('');
@@ -52,8 +57,16 @@ export const ProductDetails = () => {
     }
   }
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <div className={styles.error}>{error}</div>;
+  }
+
   if (!product || !selectedProduct) {
-    return <h1 className={styles.notFound}>Product was not found</h1>;
+    return <NotFoundPage />;
   }
 
   // --- FAVORITES LOGIC ---
@@ -66,7 +79,7 @@ export const ProductDetails = () => {
       ? favorites.filter(fav => fav.id !== product.id)
       : [...favorites, product];
 
-    setFavorites(newFavorites);
+    dispatch(setFavorites(newFavorites));
   };
 
   // --- CART LOGIC ---
@@ -76,9 +89,9 @@ export const ProductDetails = () => {
 
   const toggleCartItem = () => {
     if (isInCart()) {
-      setCart(cart.filter(item => item.id !== product.id));
+      dispatch(setCart(cart.filter(item => item.id !== product.id)));
     } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
+      dispatch(setCart([...cart, { ...product, quantity: 1 }]));
     }
   };
 

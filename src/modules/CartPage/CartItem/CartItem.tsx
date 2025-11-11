@@ -3,39 +3,44 @@ import { Product } from '../../../types/Product';
 import closeIcon from '../../../assets/icons/close.svg';
 import plusIcon from '../../../assets/icons/plus-icon.svg';
 import minusIcon from '../../../assets/icons/minus-icon.svg';
-import { useContext } from 'react';
-import { DataContext } from '../../../context/DataContext';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { setCart } from '../../../store/slices/cartSlice';
 
 type Props = {
   product: Product;
 };
 
 export const CartItem: React.FC<Props> = ({ product }) => {
-  const { cart, setCart } = useContext(DataContext);
+  const cart = useAppSelector(state => state.cart);
+  const dispatch = useAppDispatch();
 
   const decreaseAmount = () => {
-    setCart(
-      cart.map(item => {
-        if (item.id === product.id) {
-          return { ...item, quantity: item.quantity - 1 };
-        }
+    dispatch(
+      setCart(
+        cart.map(item => {
+          if (item.id === product.id) {
+            return { ...item, quantity: item.quantity - 1 };
+          }
 
-        return item;
-      }),
+          return item;
+        }),
+      ),
     );
   };
 
   const increaseAmount = () => {
-    setCart(
-      cart.map(item => {
-        if (item.id === product.id) {
-          return { ...item, quantity: item.quantity + 1 };
-        }
+    dispatch(
+      setCart(
+        cart.map(item => {
+          if (item.id === product.id) {
+            return { ...item, quantity: item.quantity + 1 };
+          }
 
-        return item;
-      }),
+          return item;
+        }),
+      ),
     );
   };
 
@@ -45,7 +50,7 @@ export const CartItem: React.FC<Props> = ({ product }) => {
         <button
           className={styles.cartItem__remove}
           onClick={() => {
-            setCart(cart.filter(item => item.id !== product.id));
+            dispatch(setCart(cart.filter(item => item.id !== product.id)));
           }}
         >
           <img src={closeIcon} alt="" />

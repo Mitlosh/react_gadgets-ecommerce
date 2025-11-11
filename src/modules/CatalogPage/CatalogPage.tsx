@@ -7,6 +7,7 @@ import { Pagination } from '../../components/Pagination';
 import { Breadcrumbs } from '../../components/Breadcrumbs';
 import { ErrorMessage } from '../../components/ErrorMessage';
 import { Loader } from '../../components/Loader';
+import { useAppSelector } from '../../store/hooks';
 
 const CATEGORIES = ['phones', 'tablets', 'accessories'] as const;
 
@@ -23,7 +24,9 @@ type SortType = keyof typeof sortOptions;
 export const CatalogPage = () => {
   const { category } = useParams<{ category: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { products, isLoading, error } = useContext(DataContext);
+  const { isLoading, error } = useContext(DataContext);
+
+  const products = useAppSelector(state => state.products.products);
 
   if (!category || !CATEGORIES.includes(category as Category)) {
     return <Navigate to="/not-found" replace />;

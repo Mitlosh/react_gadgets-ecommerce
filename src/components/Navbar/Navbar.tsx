@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -9,7 +8,8 @@ import cartIcon from '../../assets/icons/cart.svg';
 
 import styles from './Navbar.module.scss';
 import { BurgerMenu } from '../BurgerMenu';
-import { DataContext } from '../../context/DataContext';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setIsMenuOpen } from '../../store/slices/uiSlice';
 
 const menuLinks = [
   { to: '/', label: 'Home' },
@@ -19,13 +19,14 @@ const menuLinks = [
 ];
 
 export const Navbar: React.FC = () => {
-  const { isMenuOpen, setIsMenuOpen, favorites, cart } =
-    useContext(DataContext);
-  const favoritesAmount = favorites.length;
-  const cartAmount = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const dispatch = useAppDispatch();
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
+  const isMenuOpen = useAppSelector(state => state.ui.isMenuOpen);
+  const favorites = useAppSelector(state => state.favorites);
+  const cart = useAppSelector(state => state.cart);
+
+  const toggleMenu = () => dispatch(setIsMenuOpen(!isMenuOpen));
+  const closeMenu = () => dispatch(setIsMenuOpen(false));
 
   return (
     <header className={styles.header}>
@@ -66,9 +67,9 @@ export const Navbar: React.FC = () => {
                 className={styles.navbarIcons__icon}
                 alt="Favorites"
               />
-              {favoritesAmount > 0 && (
+              {favorites.length > 0 && (
                 <span className={styles.navbarIcons__amount}>
-                  {favoritesAmount}
+                  {favorites.length}
                 </span>
               )}
             </NavLink>
@@ -82,8 +83,10 @@ export const Navbar: React.FC = () => {
                 className={styles.navbarIcons__icon}
                 alt="Cart"
               />
-              {cartAmount > 0 && (
-                <span className={styles.navbarIcons__amount}>{cartAmount}</span>
+              {cart.length > 0 && (
+                <span className={styles.navbarIcons__amount}>
+                  {cart.length}
+                </span>
               )}
             </NavLink>
           </div>

@@ -1,15 +1,15 @@
 import styles from './CartPage.module.scss';
-import { useContext, useState } from 'react';
-import { DataContext } from '../../context/DataContext';
+import { useState } from 'react';
 import { CartItem } from './CartItem';
 import { useNavigate } from 'react-router-dom';
 import arrowRight from '../../assets/icons/arrow-right.svg';
 import { CartModal } from './CartModal';
+import { useAppSelector } from '../../store/hooks';
 
 export const CartPage = () => {
-  const [showModal, setShowModal] = useState(false);
-  const { cart } = useContext(DataContext);
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const cart = useAppSelector(state => state.cart);
 
   const totalCartPrice = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,

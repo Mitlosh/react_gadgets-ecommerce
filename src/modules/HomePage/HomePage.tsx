@@ -1,12 +1,12 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrandNewModels } from './components/BrandNewModels';
 import { HeroBanner } from './components/HeroBanner';
 import { HotPrices } from './components/HotPrices';
 import { ShopByCategory } from './components/ShopByCategory';
-import { DataContext } from '../../context/DataContext';
+import { useAppSelector } from '../../store/hooks';
 
 export const HomePage = () => {
-  const { products } = useContext(DataContext);
+  const products = useAppSelector(state => state.products.products);
 
   useEffect(() => {
     window.scrollTo(0, 0);

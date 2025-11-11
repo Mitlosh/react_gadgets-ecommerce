@@ -2,11 +2,17 @@ import './styles/main.scss';
 import { Outlet } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { useContext } from 'react';
-import { DataContext } from './context/DataContext';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { fetchProducts } from './store/slices/productsSlice';
+import { useEffect } from 'react';
 
 export const App = () => {
-  const { isMenuOpen } = useContext(DataContext);
+  const dispatch = useAppDispatch();
+  const isMenuOpen = useAppSelector(state => state.ui.isMenuOpen);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   return (
     <div className="App">

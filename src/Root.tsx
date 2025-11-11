@@ -2,15 +2,16 @@ import { Navigate, Route, BrowserRouter, Routes } from 'react-router-dom';
 import { App } from './App';
 import { HomePage } from './modules/HomePage';
 import { NotFoundPage } from './modules/NotFoundPage';
-import { DataProvider } from './context/DataContext';
 import { CatalogPage } from './modules/CatalogPage';
 import { CartPage } from './modules/CartPage';
 import { FavoritesPage } from './modules/FavoritesPage';
 import { ProductDetails } from './modules/ProductDetails/ProductDetails';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 export const Root = () => {
   return (
-    <DataProvider>
+    <Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
@@ -24,6 +25,6 @@ export const Root = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-    </DataProvider>
+    </Provider>
   );
 };
