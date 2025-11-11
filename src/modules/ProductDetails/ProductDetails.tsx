@@ -40,6 +40,10 @@ export const ProductDetails = () => {
     }
   }, [selectedProduct, product]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (product) {
     switch (product.category as Category) {
       case 'phones':

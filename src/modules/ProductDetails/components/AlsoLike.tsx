@@ -63,7 +63,10 @@ export const AlsoLike: React.FC<Props> = ({ products }) => {
           className={styles.brandNewModels__swiper}
         >
           {products.map(product => (
-            <SwiperSlide key={product.itemId}>
+            <SwiperSlide
+              key={product.itemId}
+              onClick={() => window.scrollTo(0, 0)}
+            >
               <ProductCard
                 key={product.itemId}
                 product={product}
