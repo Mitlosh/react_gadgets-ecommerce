@@ -1,11 +1,11 @@
-# Gadgets Catalog 🛍️
+# Nice gadgets 🛍️
 
 A modern React-based e-commerce catalog for browsing gadgets, managing favorites, and adding products to the shopping cart.
 The project is built according to the provided Figma design, focusing on responsive layout, smooth navigation, and clean user experience.
 
 🎨 Design Reference: [Figma Design Link](https://www.figma.com/design/xMK2Dy0mfBbJJSNctmOuLW/Phone-catalog--V2--Rounded-Style-1?node-id=0-1&p=f)
 
-🌐 Live Demo: [View Demo](https://react-gadgets-ecommerce.netlify.app/)
+🌐 Live Demo: [View Demo](https://mitlosh-nice-gadgets.netlify.app/)
 
 ## 🚀 Features
 
